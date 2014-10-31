@@ -10,10 +10,51 @@
     <div id="example"></div>
     <script type="text/jsx">
       /** @jsx React.DOM */
-      var MyComponent = React.createClass({
+      var InnerComponent = React.createClass({
         render: function () {
-          return (<h1>{ this.props.text }</h1>);
+          return (<div> Inner component rendered {this.props.reRenderCount} times</div>);
         }
+      });
+      var MyComponent = React.createClass({
+          changeState: function () {
+            this.setState({
+              stateVariable: "New value",
+              statusChangeCount: (this.state.statusChangeCount || 0) + 1,
+              stateStatus: "State was changed"
+            })
+          },
+          render: function () {
+            return (
+              <div>
+                <h1>{ this.props.text }</h1>
+                <div>{ this.state.stateVariable }</div>
+                <div>State status: {this.state.stateStatus} {this.state.statusChangeCount} times</div>
+                <button type="button" onClick={this.changeState}> Change state </button>
+                <hr/>
+                <InnerComponent reRenderCount={this.state.statusChangeCount}/>
+              </div>
+            );
+          },
+          getInitialState: function () {
+            return {
+              stateVariable: "This is initial state"
+            }
+          },
+          componentWillMount: function () {
+            console.log("My component will mount");
+            console.dir(this.props);
+            console.dir(this.state);
+          },
+          componentDidMount: function () {
+            console.log("MyComponent DID mount");
+            console.dir(this.props);
+            console.dir(this.state);
+          },
+          componentWillUnmount: function () {
+            console.log("MyComponent will UNMount");
+            console.dir(this.props);
+            console.dir(this.state);
+          }
       });
 
       React.renderComponent(
