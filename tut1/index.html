@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- The core React library -->
+    <script src="http://fb.me/react-0.12.0.js"></script>
+    <!-- In-browser JSX transformer, remove when pre-compiling JSX. -->
+    <script src="http://fb.me/JSXTransformer-0.12.0.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+      var MyComponent = React.createClass({
+        render: function () {
+          return (<h1>{ this.props.text }</h1>);
+        }
+      });
+
+      React.renderComponent(
+        <MyComponent text="testing props"/>,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
